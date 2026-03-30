@@ -3,13 +3,19 @@ on:
   schedule: [{cron: "0 * * * *"}] # Se actualiza cada hora
   workflow_dispatch:
   push: {branches: ["master", "main"]}
+
+# ⬇️ NUEVO: Permisos necesarios para el GITHUB_TOKEN
+permissions:
+  contents: write
+
 jobs:
   github-metrics:
     runs-on: ubuntu-latest
     steps:
       - uses: lowlighter/metrics@latest
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          # ⬇️ CAMBIADO: De GH_TOKEN a GITHUB_TOKEN
+          token: ${{ secrets.GITHUB_TOKEN }}
           user: jesuscastromtz
           template: classic
           base: header, community, repositories, metadata
